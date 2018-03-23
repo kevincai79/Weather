@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class WeatherList extends Component {
+class WeatherList extends Component {
+  renderWeather(cityData) {
+    return (
+      <tr>
+        <td>{cityData.city.name}</td>
+      </tr>
+    );
+  }
+
   render() {
     return (
       <table className="table table-hover">
@@ -12,8 +21,14 @@ export default class WeatherList extends Component {
             <th>Humidity</th>
           </tr>
         </thead>
-        <tbody />
+        <tbody>{this.props.weather.map(this.renderWeather)}</tbody>
       </table>
     );
   }
 }
+
+function mapStateToProps({ weather }) {
+  return { weather };
+}
+
+export default connect(mapStateToProps)(WeatherList);
